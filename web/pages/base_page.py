@@ -16,8 +16,9 @@ class BasePage:
         self.wait.until(EC.element_to_be_clickable(locator)).click()
 
     def type(self, locator, text):
-        field = self.wait.until(EC.element_to_be_clickable(locator))
-        ActionChains(self.driver).move_to_element(field).click().send_keys(text).perform()
+        field = self.wait.until(EC.visibility_of_element_located(locator))
+        field.clear()
+        field.send_keys(text)
 
     def get_text(self, locator) -> str:
         return self.find(locator).text
