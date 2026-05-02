@@ -1,2 +1,7 @@
 # Guia de apresentação (uso local apenas)
 guia-projeto-automacao.md
+
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
