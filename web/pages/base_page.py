@@ -16,7 +16,7 @@ class BasePage:
         element.click()
 
     def type(self, locator, text):
-        field = self.wait.until(EC.presence_of_element_located(locator))
+        field = self.wait.until(EC.visibility_of_element_located(locator))
         field.clear()
         field.send_keys(text)
 

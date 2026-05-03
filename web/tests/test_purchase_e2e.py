@@ -1,35 +1,37 @@
 import pytest
-from selenium.webdriver.common.by import By
 from web.pages.login_page import LoginPage
 from web.pages.inventory_page import InventoryPage
 from web.pages.cart_page import CartPage
 from web.pages.checkout_page import CheckoutPage
 from web.pages.checkout_complete_page import CheckoutCompletePage
-from web.pages.base_page import BasePage
-
-VALID_USER     = "standard_user"
-VALID_PASSWORD = "secret_sauce"
 
 @pytest.mark.web
-class TestE2EPurchase:
-    def test_complete_purchase(self, driver):
-        LoginPage(driver).open().login(VALID_USER, VALID_PASSWORD)
+class TestLogin:
+    def test_login_success(self, logged_in):
+        assert "inventory" in logged_in.current_url
 
-        InventoryPage(driver).add_first_item_to_cart().go_to_cart()
-
-        cart = CartPage(driver)
-        assert cart.get_item_name() == "Sauce Labs Backpack"
-
-        cart.proceed_to_checkout()
-
-        CheckoutPage(driver).fill_info("Andre", "Tester", "12345").continue_to_overview()
-
-        BasePage(driver).click((By.ID, "finish"))
-
-        msg = CheckoutCompletePage(driver).get_confirmation_message()
-        assert msg == "Thank you for your order!"
-
-    def test_login_with_invalid_credentials(self, driver):
+    def test_login_invalid(self, driver):
         login = LoginPage(driver).open()
         login.login("wrong_user", "wrong_pass")
         assert "Epic sadface" in login.get_error()
+
+
+@pytest.mark.web
+class TestCart:
+    def test_item_in_cart(self, cart_ready):
+        assert CartPage(cart_ready).get_item_name() == "Sauce Labs Backpack"
+
+
+@pytest.mark.web
+class TestCheckout:
+    def test_fill_checkout_form(self, checkout_ready):
+        CheckoutPage(checkout_ready).fill_info("Andre", "Tester", "12345").continue_to_overview()
+        assert "checkout-step-two" in checkout_ready.current_url
+
+    def test_complete_purchase(self, checkout_ready):
+        CheckoutPage(checkout_ready).fill_info("Andre", "Tester", "12345").continue_to_overview()
+        from selenium.webdriver.common.by import By
+        from web.pages.base_page import BasePage
+        BasePage(checkout_ready).click((By.ID, "finish"))
+        msg = CheckoutCompletePage(checkout_ready).get_confirmation_message()
+        assert msg == "Thank you for your order!"
