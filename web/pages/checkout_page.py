@@ -14,5 +14,6 @@ class CheckoutPage(BasePage):
         self.type(POSTAL_CODE, postal)
         return self
     def continue_to_overview(self):
+        self.wait.until(lambda d: d.execute_script("return document.readyState") == "complete")
         self.wait.until(EC.element_to_be_clickable(BTN_CONTINUE)).click()
         self.wait.until(EC.url_contains("checkout-step-two"))
