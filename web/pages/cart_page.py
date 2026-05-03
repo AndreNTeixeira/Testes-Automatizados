@@ -14,7 +14,7 @@ class CartPage(BasePage):
         btn = self.wait.until(EC.element_to_be_clickable(BTN_CHECKOUT))
         ActionChains(self.driver).move_to_element(btn).click().perform()
         try:
-            self.wait.until(EC.url_contains("checkout-step-one"))
+            self.short_wait.until(EC.url_contains("checkout-step-one"))
         except TimeoutException:
             self.driver.get("https://www.saucedemo.com/checkout-step-one.html")
             self.wait.until(EC.url_contains("checkout-step-one"))

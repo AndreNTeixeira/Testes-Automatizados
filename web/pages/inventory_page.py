@@ -13,7 +13,7 @@ class InventoryPage(BasePage):
     def go_to_cart(self):
         self.click(CART_ICON)
         try:
-            self.wait.until(EC.url_contains("cart.html"))
+            self.short_wait.until(EC.url_contains("cart.html"))
         except TimeoutException:
             self.driver.get("https://www.saucedemo.com/cart.html")
             self.wait.until(EC.url_contains("cart.html"))
