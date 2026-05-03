@@ -30,8 +30,5 @@ class TestCheckout:
 
     def test_complete_purchase(self, checkout_ready):
         CheckoutPage(checkout_ready).fill_info("Andre", "Tester", "12345").continue_to_overview()
-        from selenium.webdriver.common.by import By
-        from web.pages.base_page import BasePage
-        BasePage(checkout_ready).click((By.ID, "finish"))
-        msg = CheckoutCompletePage(checkout_ready).get_confirmation_message()
-        assert msg == "Thank you for your order!"
+        page = CheckoutCompletePage(checkout_ready).finish_purchase()
+        assert page.get_confirmation_message() == "Thank you for your order!"
