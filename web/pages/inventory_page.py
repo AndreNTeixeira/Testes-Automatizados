@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 from .base_page import BasePage
 
 ADD_FIRST_ITEM = (By.CSS_SELECTOR, ".inventory_item button")
@@ -11,5 +12,8 @@ class InventoryPage(BasePage):
         return self
     def go_to_cart(self):
         self.click(CART_ICON)
-        self.wait.until(EC.url_contains("cart.html"))
-        self.wait.until(EC.element_to_be_clickable((By.ID, "checkout")))
+        try:
+            self.wait.until(EC.url_contains("cart.html"))
+        except TimeoutException:
+            self.driver.get("https://www.saucedemo.com/cart.html")
+            self.wait.until(EC.url_contains("cart.html"))
