@@ -12,3 +12,4 @@ class InventoryPage(BasePage):
     def go_to_cart(self):
         self.click(CART_ICON)
         self.wait.until(EC.url_contains("cart.html"))
+        self.wait.until(EC.element_to_be_clickable((By.ID, "checkout")))
