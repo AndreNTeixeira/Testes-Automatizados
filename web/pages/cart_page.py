@@ -9,5 +9,5 @@ class CartPage(BasePage):
     def get_item_name(self) -> str:
         return self.get_text(CART_ITEM_NAME)
     def proceed_to_checkout(self):
-        self.click(BTN_CHECKOUT)
+        self.wait.until(EC.element_to_be_clickable(BTN_CHECKOUT)).click()
         self.wait.until(EC.url_contains("checkout-step-one"))
