@@ -1,5 +1,7 @@
-# Guia de apresentação (uso local apenas)
+# Documentos locais de apresentação
 guia-projeto-automacao.md
+guia-apresentacao.md
+briefing_apresentacao.md
 
 __pycache__/
 *.pyc

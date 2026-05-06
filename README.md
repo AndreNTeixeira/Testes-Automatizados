@@ -245,6 +245,28 @@ web-tests   → pytest -m web    (instala google-chrome-stable no Ubuntu)
 
 ---
 
+## Pipeline CI/CD em Execução
+
+Ambos os jobs executam automaticamente a cada `push` na branch `main`. Os testes de API e Web rodam em paralelo em servidores Ubuntu do GitHub.
+
+### Jobs `api-tests` e `web-tests` passando
+
+![CI Pipeline](ci-pipeline.png)
+
+### Testes de API — 15 passed
+
+Todos os 15 testes de Pet, Store e User passando em menos de 1 segundo.
+
+![API Tests](api-tests-result.png)
+
+### Testes Web E2E — 5 passed
+
+Fluxo completo de compra no SauceDemo: login → carrinho → checkout → confirmação.
+
+![Web Tests](web-tests-result.png)
+
+---
+
 ## Cobertura
 
 | Suite | Testes | Status |
